@@ -50,3 +50,8 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+/symfony-php_8/.docker/php/ca-certificates.crt
+/symfony-php_8/.docker/php/Fortinet_CA_SSL.cer
+
+.idea
+./.idea
