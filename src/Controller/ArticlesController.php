@@ -11,6 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticlesController extends AbstractController
 {
+    const BASE = 1;
+    const EXP = 5;
+
+    const DAYS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     private DefaultService $defaultService;
 
     /**
@@ -41,41 +45,10 @@ class ArticlesController extends AbstractController
             . ' y ' . $this->defaultService->obtenerPi() . ', <br/>'
             . 'viendo los datos de $a ' . $a . ', <br/>'
             . ' y determinando si $a es mayor que $b: ' . $this->compararValores($firstValue, $secondValue) . ', <br/>'
-            . ' y determinando si $a es mayor que $b pero anidado: ' . $this->compararValoresAnidados($firstValue, $secondValue). ', <br/>'
+            . ' y determinando si $a es mayor que $b pero anidado: ' . $this->compararValoresAnidados($firstValue, $secondValue) . ', <br/>'
             . $var_switch . ', <br/>'
             . $var_match . ', <br/>'
         );
-    }
-
-    /**
-     * Esta función compara los dos valores proporcionados y devuelve un string que indica si el primer valor es mayor o menor que el segundo
-     *
-     * @param int $primerValor El primer valor a comparar
-     * @param int $segundoValor El segundo valor a comparar
-     * @return String "mayor" si el primer valor es mayor que el segundo, "menor" en cualquier otro caso
-     */
-    private function compararValores(int $primerValor, int $segundoValor): string
-    {
-        return $primerValor > $segundoValor ? 'mayor' : 'menor';
-    }
-
-    /**
-     * Esta función compara los dos valores proporcionados de una manera anidada y devuelve un string que indica si el primer valor es mayor, menor o igual al segundo
-     *
-     * @param int $primerValor El primer valor a comparar
-     * @param int $segundoValor El segundo valor a comparar
-     * @return String "mayor" si el primer valor es mayor que el segundo, "menor" si el primer valor es menor que el segundo, "igual" si los dos valores son iguales
-     */
-    private function compararValoresAnidados(int $primerValor, int $segundoValor): string
-    {
-        return $primerValor > $segundoValor ? 'mayor' : ($primerValor < $segundoValor ? 'menor' : 'igual');
-    }
-
-    #[Route(path: '/articulos-json', name: 'articles-json', methods: ['GET'])]
-    public function listJson(Request $request)
-    {
-
-        return new JsonResponse(['nombre' => 'Gerardo'], Response::HTTP_CREATED);
     }
 
     /**
@@ -130,4 +103,94 @@ class ArticlesController extends AbstractController
             default => 'Error de código',
         };
     }
+
+    /**
+     * Esta función compara los dos valores proporcionados y devuelve un string que indica si el primer valor es mayor o menor que el segundo
+     *
+     * @param int $primerValor El primer valor a comparar
+     * @param int $segundoValor El segundo valor a comparar
+     * @return String "mayor" si el primer valor es mayor que el segundo, "menor" en cualquier otro caso
+     */
+    private function compararValores(int $primerValor, int $segundoValor): string
+    {
+        return $primerValor > $segundoValor ? 'mayor' : 'menor';
+    }
+
+    /**
+     * Esta función compara los dos valores proporcionados de una manera anidada y devuelve un string que indica si el primer valor es mayor, menor o igual al segundo
+     *
+     * @param int $primerValor El primer valor a comparar
+     * @param int $segundoValor El segundo valor a comparar
+     * @return String "mayor" si el primer valor es mayor que el segundo, "menor" si el primer valor es menor que el segundo, "igual" si los dos valores son iguales
+     */
+    private function compararValoresAnidados(int $primerValor, int $segundoValor): string
+    {
+        return $primerValor > $segundoValor ? 'mayor' : ($primerValor < $segundoValor ? 'menor' : 'igual');
+    }
+
+    #[Route(path: '/articulos-json', name: 'articles-json', methods: ['GET'])]
+    public function listJson(Request $request)
+    {
+
+        return new JsonResponse(['nombre' => 'Gerardo'], Response::HTTP_CREATED);
+    }
+
+    #[Route(path: '/arts-funciones', name: 'app_articles_funciones', methods: ['GET'])]
+    public function getFunciones(): Response
+    {
+        return new Response("<body>" . $this->getBreaks() . "</body>");
+    }
+
+    /**
+     * Foreach para un array
+     * @return string
+     */
+    private function getDays(): string
+    {
+        $text = "";
+        foreach (self::DAYS as $key => $day) {
+            $text .= "(" . $key . ") " . $day . "<br/>";
+        }
+        return $text;
+    }
+
+    private function paramFor(): string
+    {
+        $text = "";
+        for ($i = self::BASE; $i <= self::EXP; $i++) {
+            for ($j = self::BASE; $j <= $i; $j++) {
+                $text .= "<span>*</span>";
+            }
+            $text .= "<br/>";
+        }
+
+        return $text;
+
+    }
+
+    private function getBreaks(): string
+    {
+        $text = "";
+        for ($i = self::BASE; $i <= self::EXP; $i++) {
+
+            //break
+//            if($i === 4){
+//                break;
+//            }
+
+//             continue
+            if($i === 4){
+                continue;
+            }
+
+
+
+            $text .= "<span>{$i}</span>";
+            $text .= "<br/>";
+        }
+
+        return $text;
+    }
+
+
 }
