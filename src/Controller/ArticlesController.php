@@ -38,6 +38,13 @@ class ArticlesController extends AbstractController
         $var_switch = $this->switcheable($firstValue);
         $var_match = $this->matcheable($secondValue);
 
+        $date = $this->getDate();
+        $theTime = $this->getTime();
+        $theDay = $this->getDay();
+        $theRaiz = $this->getRaizCuadrada(9);
+
+
+
         return new Response('Bienvenido a PHP Maipú: ' . $data . ',  <br/>'
             . $this->defaultService->obtenerVersionPhp() . ', <br/>'
             . $this->defaultService->obtenerSO() . ', <br/>'
@@ -48,6 +55,11 @@ class ArticlesController extends AbstractController
             . ' y determinando si $a es mayor que $b pero anidado: ' . $this->compararValoresAnidados($firstValue, $secondValue) . ', <br/>'
             . $var_switch . ', <br/>'
             . $var_match . ', <br/>'
+            . 'el día: ' . $date . ', <br/>'
+            . 'el time: ' . $theTime . ', <br/>'
+            . 'el day: ' . $theDay . ', <br/>'
+            . 'la raíz: ' . $theRaiz . ', <br/>'
+            . 'buscando aleatorios: ' . $this->aleatorio() . ', <br/>'
         );
     }
 
@@ -192,5 +204,31 @@ class ArticlesController extends AbstractController
         return $text;
     }
 
+    protected function getDate(): string
+    {
+        return date('H:i:s');
+    }
+
+    protected function getTime(): string
+    {
+        return time();
+    }
+
+    protected function getDay(): string
+    {
+        $nDay = date('w');
+
+        return $this->matcheable((int)$nDay);
+    }
+
+    protected function getRaizCuadrada($numero): float
+    {
+        return sqrt($numero);
+    }
+
+    protected function aleatorio(): int
+    {
+        return rand(1,100);
+    }
 
 }
