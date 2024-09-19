@@ -29,6 +29,7 @@ class ArticlesController extends AbstractController
     public function list(Request $request): Response
     {
         $data = $request->query->get('nombre', 'Gerardo');
+        $data_fac = $request->query->get('fac', 9);
 
         $firstValue = $a = 3;
         $secondValue = 4;
@@ -42,7 +43,6 @@ class ArticlesController extends AbstractController
         $theTime = $this->getTime();
         $theDay = $this->getDay();
         $theRaiz = $this->getRaizCuadrada(9);
-
 
 
         return new Response('Bienvenido a PHP Maipú: ' . $data . ',  <br/>'
@@ -60,6 +60,7 @@ class ArticlesController extends AbstractController
             . 'el day: ' . $theDay . ', <br/>'
             . 'la raíz: ' . $theRaiz . ', <br/>'
             . 'buscando aleatorios: ' . $this->aleatorio() . ', <br/>'
+            . "factorial de {$data_fac} : " . $this->factorial($data_fac) . ', <br/>'
         );
     }
 
@@ -116,6 +117,28 @@ class ArticlesController extends AbstractController
         };
     }
 
+    protected function getDate(): string
+    {
+        return date('H:i:s');
+    }
+
+    protected function getTime(): string
+    {
+        return time();
+    }
+
+    protected function getDay(): string
+    {
+        $nDay = date('w');
+
+        return $this->matcheable((int)$nDay);
+    }
+
+    protected function getRaizCuadrada($numero): float
+    {
+        return sqrt($numero);
+    }
+
     /**
      * Esta función compara los dos valores proporcionados y devuelve un string que indica si el primer valor es mayor o menor que el segundo
      *
@@ -140,6 +163,11 @@ class ArticlesController extends AbstractController
         return $primerValor > $segundoValor ? 'mayor' : ($primerValor < $segundoValor ? 'menor' : 'igual');
     }
 
+    protected function aleatorio(): int
+    {
+        return rand(1, 100);
+    }
+
     #[Route(path: '/articulos-json', name: 'articles-json', methods: ['GET'])]
     public function listJson(Request $request)
     {
@@ -151,6 +179,46 @@ class ArticlesController extends AbstractController
     public function getFunciones(): Response
     {
         return new Response("<body>" . $this->getBreaks() . "</body>");
+    }
+
+    private function getBreaks(): string
+    {
+        $text = "";
+        for ($i = self::BASE; $i <= self::EXP; $i++) {
+
+            //break
+//            if($i === 4){
+//                break;
+//            }
+
+//             continue
+            if ($i === 4) {
+                continue;
+            }
+
+
+            $text .= "<span>{$i}</span>";
+            $text .= "<br/>";
+        }
+
+        return $text;
+    }
+
+    /**
+     * @param int $number
+     * @return float|int
+     */
+    protected function factorial(int $number = 9): float|int
+    {
+        $resultado = 1;
+
+        for ($i = 1; $i <= $number; $i++) {
+            $resultado = $resultado * $i;
+
+        }
+
+        return $resultado;
+
     }
 
     /**
@@ -178,57 +246,6 @@ class ArticlesController extends AbstractController
 
         return $text;
 
-    }
-
-    private function getBreaks(): string
-    {
-        $text = "";
-        for ($i = self::BASE; $i <= self::EXP; $i++) {
-
-            //break
-//            if($i === 4){
-//                break;
-//            }
-
-//             continue
-            if($i === 4){
-                continue;
-            }
-
-
-
-            $text .= "<span>{$i}</span>";
-            $text .= "<br/>";
-        }
-
-        return $text;
-    }
-
-    protected function getDate(): string
-    {
-        return date('H:i:s');
-    }
-
-    protected function getTime(): string
-    {
-        return time();
-    }
-
-    protected function getDay(): string
-    {
-        $nDay = date('w');
-
-        return $this->matcheable((int)$nDay);
-    }
-
-    protected function getRaizCuadrada($numero): float
-    {
-        return sqrt($numero);
-    }
-
-    protected function aleatorio(): int
-    {
-        return rand(1,100);
     }
 
 }
