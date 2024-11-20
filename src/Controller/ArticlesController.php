@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\DefaultService;
@@ -44,6 +44,7 @@ class ArticlesController extends AbstractController
         $theDay = $this->getDay();
         $theRaiz = $this->getRaizCuadrada(9);
 
+//        return new Response((string)$this->sumInt(3, 5));
 
         return new Response('Bienvenido a PHP Maipú: ' . $data . ',  <br/>'
             . $this->defaultService->obtenerVersionPhp() . ', <br/>'
@@ -122,7 +123,7 @@ class ArticlesController extends AbstractController
         return date('H:i:s');
     }
 
-    protected function getTime(): string
+    protected function getTime(): int
     {
         return time();
     }
@@ -246,6 +247,30 @@ class ArticlesController extends AbstractController
 
         return $text;
 
+    }
+
+    public function valores(string $nombre, int $rating = 5): string
+    {
+        return "El nombre del curso {$nombre} tiene un rating de {$rating}";
+    }
+
+    public function concatenar(...$parametros): int
+    {
+        $result = 0;
+        foreach ($parametros as $param) {
+            $result += (int)$param;
+        }
+        return $result;
+    }
+
+    /**
+     * @param int $value_1
+     * @param int $value_2
+     * @return int
+     */
+    public function sumInt(int $value_1, int $value_2):int
+    {
+        return $value_1 + $value_2;
     }
 
 }
