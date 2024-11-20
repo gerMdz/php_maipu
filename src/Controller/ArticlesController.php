@@ -44,25 +44,9 @@ class ArticlesController extends AbstractController
         $theDay = $this->getDay();
         $theRaiz = $this->getRaizCuadrada(9);
 
-//        return new Response((string)$this->sumInt(3, 5));
+        return new Response((string)$this->sumInt(3, 5));
 
-        return new Response('Bienvenido a PHP Maipú: ' . $data . ',  <br/>'
-            . $this->defaultService->obtenerVersionPhp() . ', <br/>'
-            . $this->defaultService->obtenerSO() . ', <br/>'
-            . $this->defaultService->obtenerPathExtensionPhp() . ', <br/>'
-            . ' y ' . $this->defaultService->obtenerPi() . ', <br/>'
-            . 'viendo los datos de $a ' . $a . ', <br/>'
-            . ' y determinando si $a es mayor que $b: ' . $this->compararValores($firstValue, $secondValue) . ', <br/>'
-            . ' y determinando si $a es mayor que $b pero anidado: ' . $this->compararValoresAnidados($firstValue, $secondValue) . ', <br/>'
-            . $var_switch . ', <br/>'
-            . $var_match . ', <br/>'
-            . 'el día: ' . $date . ', <br/>'
-            . 'el time: ' . $theTime . ', <br/>'
-            . 'el day: ' . $theDay . ', <br/>'
-            . 'la raíz: ' . $theRaiz . ', <br/>'
-            . 'buscando aleatorios: ' . $this->aleatorio() . ', <br/>'
-            . "factorial de {$data_fac} : " . $this->factorial($data_fac) . ', <br/>'
-        );
+
     }
 
     /**
